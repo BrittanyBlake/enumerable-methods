@@ -67,6 +67,13 @@ module Enumerable
   # end of my_none?
 
   # my_count
+  def my_count
+    count = 0
+    my_each do |_item|
+      count += 1
+    end
+    count
+  end
 
   # end of my_count
 end
@@ -90,5 +97,5 @@ end
 #  [2,2,2,1,5].none? {|i| p i.even?}
 #  [2,2,2,1,5].my_none? {|i| p i.even?}
 
-# p [2,2,2,1,5].count { |i| i.even?}
-# p [2,2,2,1,5].my_count {|i| p i.even?}
+p [2, 2, 2, 1, 5].count { |i| i }
+p [2, 2, 2, 1, 5].my_count { |i| i }
