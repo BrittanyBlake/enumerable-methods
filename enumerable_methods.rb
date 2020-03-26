@@ -56,6 +56,15 @@ module Enumerable
     false
   end
   # end of my_any?
+
+  # my_none?
+  def my_none?
+    my_each do |item|
+      return false if yield item
+    end
+    true
+  end
+  # end of my_none?
 end
 
 # tests
@@ -71,7 +80,10 @@ end
 # [2,2,2,1,5].all? {|i| p i.even?}
 # [2,2,2,1,5].my_all? {|i| p i.even?}
 
-  [2,2,2,1,5].any? {|i| p i.even?}
-  [2,2,2,1,5].my_any? {|i| p i.even?}
+  # [2,2,2,1,5].any? {|i| p i.even?}
+  # [2,2,2,1,5].my_any? {|i| p i.even?}
+
+   [2,2,2,1,5].none? {|i| p i.even?}
+   [2,2,2,1,5].my_none? {|i| p i.even?}
 
 
