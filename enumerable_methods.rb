@@ -65,6 +65,10 @@ module Enumerable
     true
   end
   # end of my_none?
+
+  # my_count
+
+  # end of my_count
 end
 
 # tests
@@ -80,10 +84,11 @@ end
 # [2,2,2,1,5].all? {|i| p i.even?}
 # [2,2,2,1,5].my_all? {|i| p i.even?}
 
-  # [2,2,2,1,5].any? {|i| p i.even?}
-  # [2,2,2,1,5].my_any? {|i| p i.even?}
+# [2,2,2,1,5].any? {|i| p i.even?}
+# [2,2,2,1,5].my_any? {|i| p i.even?}
 
-   [2,2,2,1,5].none? {|i| p i.even?}
-   [2,2,2,1,5].my_none? {|i| p i.even?}
+#  [2,2,2,1,5].none? {|i| p i.even?}
+#  [2,2,2,1,5].my_none? {|i| p i.even?}
 
-
+# p [2,2,2,1,5].count { |i| i.even?}
+# p [2,2,2,1,5].my_count {|i| p i.even?}
