@@ -74,8 +74,17 @@ module Enumerable
     end
     count
   end
-
   # end of my_count
+
+  # start of my_map
+  def my_map
+    new_array = []
+    my_each do |item|
+      new_array << item
+    end
+    new_array
+  end
+  # end of my_map
 end
 
 # tests
@@ -97,5 +106,8 @@ end
 #  [2,2,2,1,5].none? {|i| p i.even?}
 #  [2,2,2,1,5].my_none? {|i| p i.even?}
 
-p [2, 2, 2, 1, 5].count { |i| i }
-p [2, 2, 2, 1, 5].my_count { |i| i }
+# p [2, 2, 2, 1, 5].count { |i| i }
+# p [2, 2, 2, 1, 5].my_count { |i| i }
+
+# p [2, 2, 2, 1, 5].map { |i| i }
+# p [2, 2, 2, 1, 5].my_map { |i| i }
