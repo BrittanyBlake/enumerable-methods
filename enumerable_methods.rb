@@ -40,16 +40,26 @@ module Enumerable
   # end of my_select
 
   # my_all?
-
+  def my_all?
+    my_each do |item|
+      return false unless yield item
+    end
+    true
+  end
   # end of my_all?
 end
 
 # tests
-[1, 2, 3, 4, 5].each { |i| puts i }
-[1, 2, 3, 4, 5].my_each { |element| puts element }
+# [1, 2, 3, 4, 5].each { |i| puts i }
+# [1, 2, 3, 4, 5].my_each { |element| puts element }
 
-[1, 2, 3, 4, 5].each_with_index { |ele, idx| puts "#{idx}:#{ele}" }
-[1, 2, 3, 4, 5].my_each_with_index { |ele, idx| puts "#{idx}:#{ele}" }
+# [1, 2, 3, 4, 5].each_with_index { |ele, idx| puts "#{idx}:#{ele}" }
+# [1, 2, 3, 4, 5].my_each_with_index { |ele, idx| puts "#{idx}:#{ele}" }
 
-[1, 2, 3, 4, 5].select { |i| p i.even? }
-[3, 3, 3, 4, 5].my_select { |i| p i.even? }
+# [1, 2, 3, 4, 5].select { |i| p i.even? }
+# [3, 3, 3, 4, 5].my_select { |i| p i.even? }
+
+# [2,2,2,1,5].all? {|i| p i.even?}
+# [2,2,2,1,5].my_all? {|i| p i.even?}
+
+
