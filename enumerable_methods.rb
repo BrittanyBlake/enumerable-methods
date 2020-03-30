@@ -85,6 +85,11 @@ module Enumerable
     new_array
   end
   # end of my_map
+
+  # start of my_inject
+  def my_inject()
+  end
+  # end of my_inject
 end
 
 # tests
@@ -111,3 +116,6 @@ end
 
 # p [2, 2, 2, 1, 5].map { |i| i }
 # p [2, 2, 2, 1, 5].my_map { |i| i }
+
+p [3, 6, 10, 13].inject(:+)
+# p [3, 6, 10].inject {|sum, number| sum + number}
