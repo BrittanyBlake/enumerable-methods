@@ -69,7 +69,7 @@ module Enumerable
   # my_count
   def my_count
     count = 0
-    my_each do |item|
+    my_each do |_item|
       count += 1
     end
     count
@@ -77,7 +77,7 @@ module Enumerable
   # end of my_count
 
   # start of my_map
-  def my_map(proc = nil)
+  def my_map(_proc = nil)
     new_array = []
     my_each do |item|
       new_array << item
@@ -95,12 +95,11 @@ module Enumerable
   end
   # end of my_inject
 
-  #multiply elements method
+  # multiply elements method
   def multiply_els
-      my_inject(1) {|product, n|product * n}
+    my_inject(1) { |product, n| product * n }
   end
-  #end of multiply elements method
-
+  # end of multiply elements method
 end
 
 # tests
@@ -130,8 +129,4 @@ end
 
 # p [3, 6, 10, 13].inject(:+)
 # p [3, 6, 10, 13].inject {|sum, number| sum + number}
-# p [2,4,5].multiply_els 
-
-
-
-
+# p [2,4,5].multiply_els
