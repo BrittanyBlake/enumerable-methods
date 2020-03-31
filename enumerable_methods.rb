@@ -77,7 +77,7 @@ module Enumerable
   # end of my_count
 
   # start of my_map
-  def my_map
+  def my_map(proc = nil)
     new_array = []
     my_each do |item|
       new_array << item
@@ -126,7 +126,7 @@ end
 # p [2, 2, 2, 1, 5].my_count { |i| i }
 
 # p [2, 2, 2, 1, 5].map { |i| i }
- p [2, 2, 2, 1, 5].my_map { |i| i }
+# p [2, 2, 2, 1, 5].my_map { |i| i }
 
 # p [3, 6, 10, 13].inject(:+)
 # p [3, 6, 10, 13].inject {|sum, number| sum + number}
