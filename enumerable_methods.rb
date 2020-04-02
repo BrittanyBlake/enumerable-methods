@@ -92,19 +92,26 @@ module Enumerable
 
   # start of my_map
 
-  def my_map(proc = nil)
+  def my_map(_proc = nil)
     new_array = []
     my_each do |item|
-         return to_enum unless block_given?
-        new_array << yield(item)
+      return to_enum unless block_given?
+
+      new_array << yield(item)
     end
-      new_array
-    end
+    new_array
+  end
 
   # end of my_map
 
   # start of my_inject
-  def my_inject(acc)
+  def my_inject(initial = nil)
+    if initial.nil?
+      acc = 0
+    else
+      acc = initial
+    end
+    
     my_each do |i|
       acc = yield(acc, i)
     end
@@ -147,13 +154,21 @@ end
 #  p [1, 2, 3].count(2) # => 1
 #  p [1, 2, 3].my_count(2) # => 1
 
-p [2, 2, 2, 1, 5].map
-p [2, 2, 2, 1, 5].my_map 
-p [2, 2, 2, 1, 5].map { |i| i }
-p [2, 2, 2, 1, 5].my_map { |i| i }
-p [5, 2, 1].my_map { |x| x * 2 }
-p [5, 2, 1].map { |x| x * 2 }
+# p [2, 2, 2, 1, 5].map
+# p [2, 2, 2, 1, 5].my_map
+# p [2, 2, 2, 1, 5].map { |i| i }
+# p [2, 2, 2, 1, 5].my_map { |i| i }
+# p [5, 2, 1].my_map { |x| x * 2 }
+# p [5, 2, 1].map { |x| x * 2 }
 
-# p [3, 6, 10, 13].inject(:+)
-# p [3, 6, 10, 13].inject {|sum, number| sum + number}
-# p [2,4,5].multiply_els
+#   p [3, 6, 10, 13].inject(:+)
+#   p [3, 6, 10, 13].my_inject {|sum, number| sum + number} #=> 32
+#   p [2,4,5].multiply_els
+# # without passing initial value to inject
+# # p [5, 2, 1].inject { |result, x| result + x }
+# # # with passing initial value to inject
+# # p [5, 2, 1].inject(0) { |result, x| result + x }
+# # without passing initial value to inject
+#  p [5, 2, 1].my_inject { |result, x| result + x } #=> 8
+# # with passing initial value to inject
+#  p [5, 2, 1].my_inject(0) { |result, x| result + x } #=> 8 works
