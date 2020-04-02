@@ -33,9 +33,10 @@ module Enumerable
     i = 0
 
     until i >= length
-      new_array << i if yield self[i]
+      new_array << self[i] if yield self[i]
       i += 1
     end
+    new_array
   end
   # end of my_select
 
@@ -109,8 +110,8 @@ end
 # [1, 2, 3, 4, 5].each_with_index { |ele, idx| puts "#{idx}:#{ele}" }
 # [1, 2, 3, 4, 5].my_each_with_index { |ele, idx| puts "#{idx}:#{ele}" }
 
-# [1, 2, 3, 4, 5].select { |i| p i.even? }
-# [3, 3, 3, 4, 5].my_select { |i| p i.even? }
+ p [1, 2, 3, 4, 5].select { |i|  i.even? }
+ p [1, 2, 3, 4, 5].my_select { |i|  i.even? }
 
 # [2,2,2,1,5].all? {|i| p i.even?}
 # [2,2,2,1,5].my_all? {|i| p i.even?}
