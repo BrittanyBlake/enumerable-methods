@@ -68,14 +68,23 @@ module Enumerable
   # end of my_none?
 
   # my_count
-  def my_count
+  def my_count(arg = nil)
     count = 0
-    i = 0
-    until i >= length
-      if yield self [i]
-      count += 1
+
+    if block_given?
+      my_each do |ele|
+        count += 1 if yield(ele) == true
       end
-      i += 1
+
+    elsif arg.nil?
+      my_each do |_ele|
+        count += 1
+      end
+
+    else
+      my_each do |ele|
+        count += 1 if ele == arg
+      end
     end
     count
   end
@@ -128,11 +137,12 @@ end
 #  [2,2,2,1,5].none? {|i| p i.even?}
 #  [2,2,2,1,5].my_none? {|i| p i.even?}
 
-p [2, 2, 2, 1, 5].count { |i| i }
-p [2, 2, 2, 1, 5].my_count { |i| i }
-p [1, 2, 3].count(&:even?)
-p [1, 2, 3].my_count(&:even?)
-
+#  p [2, 2, 2, 1, 5].count
+#  p [2, 2, 2, 1, 5].my_count
+#  p [1, 2, 3].count(&:even?)
+#  p [1, 2, 3].my_count(&:even?)
+#  p [1, 2, 3].count(2) # => 1
+#  p [1, 2, 3].my_count(2) # => 1
 
 # p [2, 2, 2, 1, 5].map { |i| i }
 # p [2, 2, 2, 1, 5].my_map { |i| i }
