@@ -106,12 +106,12 @@ module Enumerable
 
   # start of my_inject
   def my_inject(initial = nil)
-    if initial.nil?
-      acc = 0
-    else
-      acc = initial
-    end
-    
+    acc = if initial.nil?
+            0
+          else
+            initial
+          end
+
     my_each do |i|
       acc = yield(acc, i)
     end
