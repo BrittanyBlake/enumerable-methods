@@ -91,13 +91,16 @@ module Enumerable
   # end of my_count
 
   # start of my_map
-  def my_map(_proc = nil)
+
+  def my_map(proc = nil)
     new_array = []
     my_each do |item|
-      new_array << item
+         return to_enum unless block_given?
+        new_array << yield(item)
     end
-    new_array
-  end
+      new_array
+    end
+
   # end of my_map
 
   # start of my_inject
@@ -144,8 +147,12 @@ end
 #  p [1, 2, 3].count(2) # => 1
 #  p [1, 2, 3].my_count(2) # => 1
 
-# p [2, 2, 2, 1, 5].map { |i| i }
-# p [2, 2, 2, 1, 5].my_map { |i| i }
+p [2, 2, 2, 1, 5].map
+p [2, 2, 2, 1, 5].my_map 
+p [2, 2, 2, 1, 5].map { |i| i }
+p [2, 2, 2, 1, 5].my_map { |i| i }
+p [5, 2, 1].my_map { |x| x * 2 }
+p [5, 2, 1].map { |x| x * 2 }
 
 # p [3, 6, 10, 13].inject(:+)
 # p [3, 6, 10, 13].inject {|sum, number| sum + number}
