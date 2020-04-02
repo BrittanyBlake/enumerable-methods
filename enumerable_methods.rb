@@ -70,8 +70,12 @@ module Enumerable
   # my_count
   def my_count
     count = 0
-    my_each do |_item|
+    i = 0
+    until i >= length
+      if yield self [i]
       count += 1
+      end
+      i += 1
     end
     count
   end
@@ -110,8 +114,10 @@ end
 # [1, 2, 3, 4, 5].each_with_index { |ele, idx| puts "#{idx}:#{ele}" }
 # [1, 2, 3, 4, 5].my_each_with_index { |ele, idx| puts "#{idx}:#{ele}" }
 
- p [1, 2, 3, 4, 5].select { |i|  i.even? }
- p [1, 2, 3, 4, 5].my_select { |i|  i.even? }
+#  p [1, 2, 3, 4, 5].select { |i|  i.even? }
+#  p [1, 2, 3, 4, 5].my_select { |i|  i.even? }
+#  p [1, 2, 3, 4, 5].select { |i|  i.odd? }
+#  p [1, 2, 3, 4, 5].my_select { |i|  i.odd? }
 
 # [2,2,2,1,5].all? {|i| p i.even?}
 # [2,2,2,1,5].my_all? {|i| p i.even?}
@@ -122,8 +128,11 @@ end
 #  [2,2,2,1,5].none? {|i| p i.even?}
 #  [2,2,2,1,5].my_none? {|i| p i.even?}
 
-# p [2, 2, 2, 1, 5].count { |i| i }
-# p [2, 2, 2, 1, 5].my_count { |i| i }
+p [2, 2, 2, 1, 5].count { |i| i }
+p [2, 2, 2, 1, 5].my_count { |i| i }
+p [1, 2, 3].count(&:even?)
+p [1, 2, 3].my_count(&:even?)
+
 
 # p [2, 2, 2, 1, 5].map { |i| i }
 # p [2, 2, 2, 1, 5].my_map { |i| i }
