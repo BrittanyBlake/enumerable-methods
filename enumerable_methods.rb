@@ -171,12 +171,8 @@ module Enumerable
   # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
   # multiply elements method
-def multiply_els
-  my_inject(1) { |product, n| product * n }
+  def multiply_els
+    my_inject(1) { |product, n| product * n }
+  end
+  # end of multiply elements method
 end
-# end of multiply elements method
-
-end
-
-
-
