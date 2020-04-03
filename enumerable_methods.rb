@@ -41,9 +41,27 @@ module Enumerable
   # end of my_select
 
   # my_all?
-  def my_all?
-    my_each do |item|
-      return false unless yield item
+  def my_all?(arg = nil, &block)
+    if block_given?
+      my_each do |item|
+        return false unless block.call(item)
+      end
+    elsif arg.nil?
+      my_each do |item|
+        return false unless item
+      end
+    elsif arg.class == Class
+      my_each do |item|
+        return false unless item.is_a?(arg)
+      end
+    elsif arg.class == Regexp
+      my_each do |item|
+        return false unless item =~ arg
+      end
+    else
+      my_each do |item|
+        return false unless item == arg
+      end
     end
     true
   end
@@ -127,48 +145,28 @@ module Enumerable
 end
 
 # tests
-# [1, 2, 3, 4, 5].each { |i| puts i }
-# [1, 2, 3, 4, 5].my_each { |element| puts element }
 
-# [1, 2, 3, 4, 5].each_with_index { |ele, idx| puts "#{idx}:#{ele}" }
-# [1, 2, 3, 4, 5].my_each_with_index { |ele, idx| puts "#{idx}:#{ele}" }
-
-#  p [1, 2, 3, 4, 5].select { |i|  i.even? }
-#  p [1, 2, 3, 4, 5].my_select { |i|  i.even? }
-#  p [1, 2, 3, 4, 5].select { |i|  i.odd? }
-#  p [1, 2, 3, 4, 5].my_select { |i|  i.odd? }
-
-# [2,2,2,1,5].all? {|i| p i.even?}
-# [2,2,2,1,5].my_all? {|i| p i.even?}
-
-# [2,2,2,1,5].any? {|i| p i.even?}
-# [2,2,2,1,5].my_any? {|i| p i.even?}
-
-#  [2,2,2,1,5].none? {|i| p i.even?}
-#  [2,2,2,1,5].my_none? {|i| p i.even?}
-
-#  p [2, 2, 2, 1, 5].count
-#  p [2, 2, 2, 1, 5].my_count
-#  p [1, 2, 3].count(&:even?)
-#  p [1, 2, 3].my_count(&:even?)
-#  p [1, 2, 3].count(2) # => 1
-#  p [1, 2, 3].my_count(2) # => 1
-
-# p [2, 2, 2, 1, 5].map
-# p [2, 2, 2, 1, 5].my_map
-# p [2, 2, 2, 1, 5].map { |i| i }
-# p [2, 2, 2, 1, 5].my_map { |i| i }
-# p [5, 2, 1].my_map { |x| x * 2 }
-# p [5, 2, 1].map { |x| x * 2 }
-
-#   p [3, 6, 10, 13].inject(:+)
-#   p [3, 6, 10, 13].my_inject {|sum, number| sum + number} #=> 32
-#   p [2,4,5].multiply_els
-# # without passing initial value to inject
-# # p [5, 2, 1].inject { |result, x| result + x }
-# # # with passing initial value to inject
-# # p [5, 2, 1].inject(0) { |result, x| result + x }
-# # without passing initial value to inject
-#  p [5, 2, 1].my_inject { |result, x| result + x } #=> 8
-# # with passing initial value to inject
-#  p [5, 2, 1].my_inject(0) { |result, x| result + x } #=> 8 works
+# p [nil, false, true, []].all?
+# p [nil, false, true, []].my_all?
+# p [true, true, true, []].all?
+# p [true, true, true, []].my_all?
+# p [1, 2.5, 'a', 9].all?(Integer)
+# p [1, 2.5, 'a', 9].my_all?(Integer)
+# p [1, 2.5, 5, 9].all?(Integer)
+# p [1, 2.5, 5, 9].my_all?(Integer)
+# p [1, 25, "a", 9].all?(Integer)
+# p [1, 25, "a", 9].my_all?(Integer)
+# p [1, 25, 5, 9].all?(Integer)
+# p [1, 25, 5, 9].my_all?(Integer)
+# p %w[dog door rod blade].all?(/d/)
+# p %w[dog door rod blade].my_all?(/d/)
+# p %w[dog boor rod blade].all?(/d/)
+# p %w[dog boor rod blade].my_all?(/d/)
+# p %w[dog door rod blade].all?(/o/)
+# p %w[dog door rod blade].my_all?(/o/)
+# p %w[dog door rod blode].all?(/o/)
+# p %w[dog door rod blode].my_all?(/o/)
+# p %w[dog doorrod blade].all?(/d/)
+# p %w[dog doorrod blade].my_all?(/d/)
+# p [3,4,7,11].all?(3)
+# p [3,4,7,11].my_all?(3)
