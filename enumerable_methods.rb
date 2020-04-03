@@ -145,28 +145,38 @@ module Enumerable
   # end of my_map
 
   # start of my_inject
-  def my_inject(initial = nil)
-    acc = if initial.nil?
-            0
-          else
-            initial
-          end
+  def my_inject(initial = nil, arg = nil)
+    arg = initial if arg.nil?
 
-    my_each do |i|
-      acc = yield(acc, i)
+    if initial.nil? || initial.is_a?(Symbol)
+      array = drop(1)
+      initial = to_a[0]
+    else
+      array = to_a
     end
-    acc
+
+    if block_given?
+      array.my_each do |i|
+        initial = yield(initial, i)
+      end
+    else
+      array.my_each do |i|
+        initial = initial.send(arg, i)
+      end
+    end
+    initial
   end
   # end of my_inject
 
   # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
-end
 
-# multiply elements method
+  # multiply elements method
 def multiply_els
   my_inject(1) { |product, n| product * n }
 end
 # end of multiply elements method
 
-# tests
+end
+
+
 
