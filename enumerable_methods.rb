@@ -85,11 +85,12 @@ module Enumerable
       end
     elsif arg.class == Regexp
       my_each do |item|
+        # return true if item =~ arg
         return true if item =~ arg
       end
     else
       my_each do |item|
-        return true if item == arg
+        return true if (item =~ arg).is_a? Integer 
       end
     end
     false
@@ -97,12 +98,16 @@ module Enumerable
   # end of my_any?
 
   # my_none?
-  def my_none?
-    my_each do |item|
-      return false if yield item
-    end
-    true
-  end
+  # def my_none?
+  #   my_each do |item|
+  #     return false if yield item
+  #   end
+  #   true
+  # end
+   def my_none?(arg = nil, &block)
+     !my_any?(arg = nil, &block)
+   end
+
   # end of my_none?
 
   # my_count
@@ -167,14 +172,4 @@ module Enumerable
 end
 
 # tests
-p [nil, false, true, []].my_any?
-p [nil, false, true, []].any? #=> true
 
-p [1, 2.5, 'a', 9].my_any?(Integer)
-p [1, 2.5, 'a', 9].any?(Integer) #=> true
-
-p %w[dog door rod blade].my_any?(/z/)
-p %w[dog door rod blade].any?(/z/) #=> false
-
-p [3, 4, 7, 11].my_any?(3)
-p [3, 4, 7, 11].any?(3) #=> true
