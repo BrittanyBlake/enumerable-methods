@@ -98,16 +98,9 @@ module Enumerable
   # end of my_any?
 
   # my_none?
-  # def my_none?
-  #   my_each do |item|
-  #     return false if yield item
-  #   end
-  #   true
-  # end
    def my_none?(arg = nil, &block)
      !my_any?(arg = nil, &block)
    end
-
   # end of my_none?
 
   # my_count
