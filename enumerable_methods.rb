@@ -90,7 +90,7 @@ module Enumerable
       end
     else
       my_each do |item|
-        return true if (item =~ arg).is_a? Integer 
+        return true if (item =~ arg).is_a? Integer
       end
     end
     false
@@ -98,9 +98,9 @@ module Enumerable
   # end of my_any?
 
   # my_none?
-   def my_none?(arg = nil, &block)
-     !my_any?(arg = nil, &block)
-   end
+  def my_none?(arg = nil, &block)
+    !my_any?(arg, &block)
+  end
   # end of my_none?
 
   # my_count
@@ -165,4 +165,5 @@ module Enumerable
 end
 
 # tests
-
+p %w[dog door rod blade].my_none?(/z/)
+p %w[dog door rod blade].none?(/z/)
