@@ -127,17 +127,21 @@ module Enumerable
   # end of my_count
 
   # start of my_map
-
-  def my_map(_proc = nil)
+  def my_map(proc = nil)
     new_array = []
-    my_each do |item|
+    if proc.nil?
       return to_enum unless block_given?
 
-      new_array << yield(item)
+      my_each do |item|
+        new_array << yield(item)
+      end
+    else
+      my_each do |item|
+        new_array << proc.call(item)
+      end
     end
     new_array
   end
-
   # end of my_map
 
   # start of my_inject
@@ -165,5 +169,5 @@ module Enumerable
 end
 
 # tests
-p %w[dog door rod blade].my_none?(/z/)
-p %w[dog door rod blade].none?(/z/)
+my_proc = proc { |num| num > 10 }
+puts [18, 22, 5, 6] .my_map(my_proc) { |num| num < 10 }
