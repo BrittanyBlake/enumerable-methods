@@ -70,9 +70,27 @@ module Enumerable
   # end of my_all?
 
   # my_any?
-  def my_any?
-    my_each do |item|
-      return true if yield item
+  def my_any?(arg = nil, &block)
+    if block_given?
+      my_each do |item|
+        return true if block.call(item)
+      end
+    elsif arg.nil?
+      my_each do |item|
+        return true if item
+      end
+    elsif arg.class == Class
+      my_each do |item|
+        return true if item.is_a?(arg)
+      end
+    elsif arg.class == Regexp
+      my_each do |item|
+        return true if item =~ arg
+      end
+    else
+      my_each do |item|
+        return true if item == arg
+      end
     end
     false
   end
@@ -149,28 +167,14 @@ module Enumerable
 end
 
 # tests
+p [nil, false, true, []].my_any?
+p [nil, false, true, []].any? #=> true
 
-# p [nil, false, true, []].all?
-# p [nil, false, true, []].my_all?
-# p [true, true, true, []].all?
-# p [true, true, true, []].my_all?
-# p [1, 2.5, 'a', 9].all?(Integer)
-# p [1, 2.5, 'a', 9].my_all?(Integer)
-# p [1, 2.5, 5, 9].all?(Integer)
-# p [1, 2.5, 5, 9].my_all?(Integer)
-# p [1, 25, "a", 9].all?(Integer)
-# p [1, 25, "a", 9].my_all?(Integer)
-# p [1, 25, 5, 9].all?(Integer)
-# p [1, 25, 5, 9].my_all?(Integer)
-# p %w[dog door rod blade].all?(/d/)
-# p %w[dog door rod blade].my_all?(/d/)
-# p %w[dog boor rod blade].all?(/d/)
-# p %w[dog boor rod blade].my_all?(/d/)
-# p %w[dog door rod blade].all?(/o/)
-# p %w[dog door rod blade].my_all?(/o/)
-# p %w[dog door rod blode].all?(/o/)
-# p %w[dog door rod blode].my_all?(/o/)
-# p %w[dog doorrod blade].all?(/d/)
-# p %w[dog doorrod blade].my_all?(/d/)
-# p [3,4,7,11].all?(3)
-# p [3,4,7,11].my_all?(3)
+p [1, 2.5, 'a', 9].my_any?(Integer)
+p [1, 2.5, 'a', 9].any?(Integer) #=> true
+
+p %w[dog door rod blade].my_any?(/z/)
+p %w[dog door rod blade].any?(/z/) #=> false
+
+p [3, 4, 7, 11].my_any?(3)
+p [3, 4, 7, 11].any?(3) #=> true
