@@ -160,14 +160,13 @@ module Enumerable
   # end of my_inject
 
   # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
-
-  # multiply elements method
-  def multiply_els
-    my_inject(1) { |product, n| product * n }
-  end
-  # end of multiply elements method
 end
 
+# multiply elements method
+def multiply_els
+  my_inject(1) { |product, n| product * n }
+end
+# end of multiply elements method
+
 # tests
-my_proc = proc { |num| num > 10 }
-puts [18, 22, 5, 6] .my_map(my_proc) { |num| num < 10 }
+
