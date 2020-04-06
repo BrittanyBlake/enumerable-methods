@@ -18,7 +18,8 @@ Metrics/BlockLength:
   ExcludedMethods: ['describe']
   Max: 30
 Metrics/ModuleLength:
-  Max: 1000
+  Enabled: false
+  
 
 
 Style/Documentation:
@@ -33,6 +34,12 @@ Style/DefWithParentheses:
   Enabled: false
 Style/FrozenStringLiteralComment:
   EnforcedStyle: never
+Style/HashEachMethods:
+  Enabled: false
+Style/HashTransformKeys:
+  Enabled: false
+Style/HashTransformValues:
+  Enabled: false
 
 Layout/HashAlignment:
   EnforcedColonStyle: key
