@@ -85,12 +85,11 @@ module Enumerable
       end
     elsif arg.class == Regexp
       my_each do |item|
-        # return true if item =~ arg
         return true if item =~ arg
       end
     else
       my_each do |item|
-        return true if (item =~ arg).is_a? Integer
+        return true if item == arg
       end
     end
     false
