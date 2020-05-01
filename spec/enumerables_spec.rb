@@ -161,4 +161,19 @@ RSpec.describe Enumerable do
       expect([-1, 1, -2, 2, -3].my_count { |ele| ele < 0 }).not_to eq(2)
     end
   end
+
+  describe '#my_map' do
+    my_proc = proc { |num| num > 10 }
+    it 'should return a new array that satisfies the block or argument passed' do
+      expect([5, 2, 1].my_map { |x| x * 2 }).to eq([10, 4, 2])
+      expect([18, 22, 5, 6].my_map(my_proc)).to eq([true, true, false, false])
+      expect(%w[this is a test].my_map(&:upcase)).to eq(%w[THIS IS A TEST])
+    end
+
+    it 'should not return new array where all the elements do not satisfy the block or argument passed' do
+      expect([5, 2, 1].my_map { |x| x * 2 }).not_to eq([5, 2, 1])
+      expect([18, 22, 5, 6].my_map(my_proc)).not_to eq([false, true, false, false])
+      expect(%w[this is a test].my_map(&:upcase)).not_to eq(%w[This IS a TEST])
+    end
+  end
 end
