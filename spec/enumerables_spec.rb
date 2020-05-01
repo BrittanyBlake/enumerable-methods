@@ -34,4 +34,44 @@ RSpec.describe Enumerable do
       expect([1, 2, 3, 4, 5].my_select(&:odd?)).not_to eq([1, 2, 3, 4, 5])
     end
   end
+
+  describe '#my_all?' do
+    it 'should return true if the array is empty' do
+        expect([].my_all?).to eq(true)
+    end
+
+    it 'should return true when none of the elements are false or nil if no block is given' do
+        expect([true, true, true, []].my_all?).to eq(true)
+    end
+
+    it 'should return false if one or more of the elements is false or nil and no block is given' do
+        expect([nil, false, true, []].my_all?).to eq(false)
+    end
+
+    it 'should return false if  one or more of the elements is false when passed into the block' do
+        expect([2,2,2,1,5].my_all? {|i| i.even?}).to eq(false)
+        expect([2,2,2].my_all? {|i| i.even?}).not_to eq(false)
+    end
+
+    context 'when a class is passed as an argument' do
+        it 'should return true if all of the elements in the collection is a member' do
+            expect([1, 2.5, 'a', 9].my_all?(Integer)).not_to eq(true)
+            expect([1, 2.5, 5, 9].my_all?(Integer)).not_to eq(true)
+            expect([1, 25, 5, 9].my_all?(Integer)).to eq(true)
+        end
+    end
+
+    context 'when a Regex is passed as an argument' do
+        it 'should return true if all the elements matches the Regex' do
+            expect(%w[dog door rod blade].my_all?(/d/)).to eq(true)
+            expect(%w[dog boor rod blade].my_all?(/d/)).not_to eq(true)
+        end
+    end
+
+    context 'when a pattern other than a Regex or a Class is given' do
+        it 'should return true if all of the collection matches the pattern' do
+            expect([3,4,7,11].my_all?(3)).not_to eq(true)
+        end
+    end
+  end
 end
