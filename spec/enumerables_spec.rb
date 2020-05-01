@@ -142,4 +142,23 @@ RSpec.describe Enumerable do
       end
     end
   end
+
+  describe '#my_count' do
+    it 'should return the number of elements in an array' do
+      expect([2, 2, 2, 1, 5].my_count).to eq(5)
+    end
+
+    it 'should return the number of elements that satisfy the argument or block given' do
+      expect([1, 2, 3].my_count(&:even?)).to eq(1)
+      expect([1, 2, 3].my_count(2)).to eq(1)
+      expect([-1, 1, -2, 2, -3].my_count { |ele| ele < 0 }).to eq(3)
+    end
+
+    it 'should not return the wrong number of elements' do
+      expect([2, 2, 2, 1, 5].my_count).not_to eq(6)
+      expect([1, 2, 3].my_count(&:even?)).not_to eq(2)
+      expect([1, 2, 3].my_count(2)).not_to eq(3)
+      expect([-1, 1, -2, 2, -3].my_count { |ele| ele < 0 }).not_to eq(2)
+    end
+  end
 end
