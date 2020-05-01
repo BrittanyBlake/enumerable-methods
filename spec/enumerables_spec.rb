@@ -18,4 +18,20 @@ RSpec.describe Enumerable do
       expect([1, 3, 2].each_with_index { |ele, idx| puts "#{idx}:#{ele}" }).not_to eq([1, 2, 3])
     end
   end
+
+  describe '#my_select' do
+    it 'shoudld return a new array containing all elements for which the block returns true' do
+      expect([1, 2, 3, 4, 5].my_select(&:even?)).to eq([2, 4])
+      expect([1, 2, 3, 4, 5].my_select(&:odd?)).to eq([1, 3, 5])
+      expect([1, 2, 3, 4, 5].my_select(&:even?)).not_to eq([2])
+      expect([1, 2, 3, 4, 5].my_select(&:odd?)).not_to eq([1, 3])
+    end
+
+    it 'should not return a new array containing elements for which the block returns false' do
+      expect([1, 2, 3, 4, 5].my_select(&:even?)).not_to eq([1, 3, 5])
+      expect([1, 2, 3, 4, 5].my_select(&:odd?)).not_to eq([2, 4])
+      expect([1, 2, 3, 4, 5].my_select(&:even?)).not_to eq([2, 4, 6])
+      expect([1, 2, 3, 4, 5].my_select(&:odd?)).not_to eq([1, 2, 3, 4, 5])
+    end
+  end
 end
