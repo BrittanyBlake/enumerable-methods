@@ -108,4 +108,38 @@ RSpec.describe Enumerable do
       end
     end
   end
+
+  describe '#my_none?' do
+    it 'should return true if the array is empty' do
+      expect([].my_none?).to eq(true)
+    end
+
+    it 'should return false when at least one element of the collection is not false or nil if no block is given' do
+      expect([nil, false, true, []].my_none?).to eq(false)
+    end
+
+    context 'when a class is passed as an argument' do
+      it 'should return true if none of the elements in the collection is a true' do
+        expect([1, 2.5, 'a', 9].my_none?(Integer)).not_to eq(true)
+        expect([1, 2.5, 5, 9].my_none?(Integer)).not_to eq(true)
+        expect([1, 25, 5, 9].my_none?(Integer)).not_to eq(true)
+        expect([2.5, 'a'].my_none?(Integer)).to eq(true)
+      end
+    end
+
+    context 'when a Regex is passed as an argument' do
+      it 'should return true if none the elements matches the Regex' do
+        expect(%w[dog door rod blade].my_none?(/z/)).to eq(true)
+        expect(%w[dog boor rod blade].my_none?(/d/)).not_to eq(true)
+        expect(%w[dog door rod blade].my_none?('cat')).to eq(true)
+      end
+    end
+
+    context 'when a pattern other than a Regex or a Class is given' do
+      it 'should return true if none of the collection matches the pattern' do
+        expect([3, 4, 7, 11].my_none?(3)).not_to eq(true)
+        expect([4, 7, 11].my_none?(3)).to eq(true)
+      end
+    end
+  end
 end
