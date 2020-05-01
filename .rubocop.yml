@@ -50,7 +50,7 @@ Style/HashTransformKeys:
   Enabled: true
 Style/HashTransformValues:
   Enabled: true
-# Lint/RaiseException:
-#   Enabled: true
-# Lint/StructNewOverride:
-#   Enabled: false
+ Lint/RaiseException:
+   Enabled: true
+ Lint/StructNewOverride:
+   Enabled: false

@@ -176,4 +176,43 @@ RSpec.describe Enumerable do
       expect(%w[this is a test].my_map(&:upcase)).not_to eq(%w[This IS a TEST])
     end
   end
+
+  describe '#my_inject' do
+    it 'should select the first item of the array to be the initial value when no initial value is passed' do
+      expect([5, 2, 1].my_inject { |result, x| result + x }).to eq(8)
+      expect([5, 2, 1].my_inject { |result, x| result * x }).to eq(10)
+    end
+
+    it 'should use the given value as the initial value when an initial value is passed' do
+      expect([5, 2, 1].my_inject(2) { |result, x| result + x }).to eq(10)
+      expect([5, 2, 1].my_inject(2) { |result, x| result * x }).to eq(20)
+    end
+
+    it 'should combine all elements of enum by applying a binary operation specified by a block' do
+      expect((1..5).my_inject(4) { |prod, n| prod * n }).to eq(480)
+    end
+
+    context 'when a symbol is provided as an argument' do
+      it 'should combine the elements of the enum using that symbol as a named method' do
+        expect([2, 5, 6].my_inject(:+)).to eq(13)
+      end
+    end
+
+    it 'should not return the wrong solution' do
+      expect([5, 2, 1].my_inject { |result, x| result * x }).not_to eq(8)
+      expect([5, 2, 1].my_inject(2) { |result, x| result + x }).not_to eq(8)
+      expect((1..5).my_inject(4) { |prod, n| prod * n }).not_to eq(48)
+      expect([2, 5, 6].my_inject(:+)).not_to eq(12)
+    end
+  end
+
+  describe '#multiply_els' do
+    it 'should return the product of all of the elements in the array' do
+      expect([2, 4, 5].multiply_els).to eq(40)
+    end
+
+    it 'should not return the incorrect product of all of the elements in the array' do
+      expect([2, 4, 5].multiply_els).not_to eq(11)
+    end
+  end
 end
